@@ -1,0 +1,25 @@
+name: Publish to JSR
+
+on:
+  push:
+    branches:
+      - main # Ou 'master', dependendo do nome da sua branch principal
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # <--- IMPORTANTE: Permite autenticação sem tokens secretos
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v2.x
+
+      - name: Publish on JSR
+        run: deno publish
