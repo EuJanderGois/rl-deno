@@ -1,6 +1,6 @@
 {
   "name": "@eujandergois/rl-deno",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "tasks": {
     "test:impl": "deno run --allow-ffi --unstable-ffi tests/implementation.ts"
   },
@@ -8,7 +8,7 @@
     "@ffi": "./src/ffi.ts",
     "@types": "./src/types.ts",
     "@utils": "./src/utils.ts",
-    "@raylib": "./src/mod.ts"
+    "@raylib": "./mod.ts"
   },
   "exports": "./mod.ts"
 }
