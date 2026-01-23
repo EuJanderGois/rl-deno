@@ -5,11 +5,7 @@
  * @module
  */
 
-export * from "./src/types.ts";
-export * from "./src/utils.ts";
+export * from "@types";
+export * as utils from "@utils";
 
-export { 
-    initWindow,
-    closeWindow,
-    beginDrawing
-} from "./src/ffi.ts";
+export * from "@ffi";
