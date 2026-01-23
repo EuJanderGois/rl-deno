@@ -10,20 +10,34 @@ import {
     initWindow,
     setTargetFPS, 
     windowShouldClose,
-    helpers
-} from "../raylib/ffi.ts";
+    utils,
+    setConfigFlags,
+    ConfigFlags,
+    KeyboardKey,
+    isKeyPressed
+} from "@raylib";
 
-const { color } = helpers;
+const { color, WindowConfig, combineFlags } = utils;
+
+const flags = combineFlags(
+  ConfigFlags.FLAG_VSYNC_HINT,
+  ConfigFlags.FLAG_MSAA_4X_HINT,
+  ConfigFlags.FLAG_WINDOW_UNDECORATED
+);
 
 const screenWidth = 800;
 const screenHeight = 450;
 
 console.log("Iniciando Raylib via Deno FFI...");
 
+setConfigFlags(flags);
 initWindow(screenWidth, screenHeight, "MC - Deno + Raylib Test");
 setTargetFPS(60);
 
 while (!windowShouldClose()) {
+  if (isKeyPressed(KeyboardKey.KEY_SPACE)) {
+    console.log("Espaço pressionado!");
+  }
   beginDrawing();
     clearBackground(color(200, 200, 200, 255));
     drawFPS(10, 10);
