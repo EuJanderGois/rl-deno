@@ -3,14 +3,14 @@ name: Publish to JSR
 on:
   push:
     branches:
-      - main # Ou 'master', dependendo do nome da sua branch principal
+      - main
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write # <--- IMPORTANTE: Permite autenticação sem tokens secretos
+      id-token: write
 
     steps:
       - name: Code checkout

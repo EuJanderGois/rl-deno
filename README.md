@@ -2,7 +2,7 @@
 
 **The definitive, documented, and maintained Raylib bindings for Deno.**
 
-![Deno](https://img.shields.io/badge/Deno-v2.0-white?logo=deno) ![Raylib](https://img.shields.io/badge/Raylib-5.0-blue) ![License](https://img.shields.io/badge/License-MIT-green)
+![Deno](https://img.shields.io/badge/Deno-v2.0-white?logo=deno) ![Raylib](https://img.shields.io/badge/Raylib-6.0-blue) ![License](https://img.shields.io/badge/License-MIT-green)
 
 > 🚧 **STATUS: PRE-ALPHA / HEAVY CONSTRUCTION** 🚧
 >
@@ -20,19 +20,22 @@ We know the pain. You want to build games or graphics with Deno, but the existin
 * **📚 Documented:** No more guessing parameter types. IntelliSense and JSDocs are first-class citizens here.
 * **🚀 Fast:** Built directly on top of Deno's `Foreign Function Interface` (FFI) for near-native performance.
 
-## 📦 Installation (Coming Soon)
+## 📦 Installation
 
-Once stable, you will be able to add in your project fast:
+You can add in your project fast:
 
 ```bash
 deno add jsr:@eujandergois/rl-deno
 ```
+
+Then add the lib folder from the official [**Raylib**](https://github.com/raysan5/raylib/releases/tag/6.0) repository releases to the project root.
 
 ## 🛠️ Usage Preview
 
 This is how simple creating a window will be:
 
 ```typescript
+// main.ts
 import { 
     initWindow,
     closeWindow,
@@ -44,18 +47,25 @@ import {
     Colors 
 } from "@eujandergois/rl-deno";
 
-const { LIGHTGRAY, RAYWHITE } = new Colors();
+const { DARKGRAY, RAYWHITE } = Colors;
 
 initWindow(800, 450, "rl-deno :: Basic Window");
 
 while (!windowShouldClose()) {
     beginDrawing();
         clearBackground(RAYWHITE);
-        drawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        drawText("Congrats! You created your first window!", 190, 200, 20, DARKGRAY);
     endDrawing();
 }
 
 closeWindow();
+```
+
+And just run your file:
+
+``` bash
+deno run --allow-ffi main.js
+
 ```
 
 ## 🤝 Contributing

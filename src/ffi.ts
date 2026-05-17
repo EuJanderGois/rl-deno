@@ -4,7 +4,8 @@ import {
   cstr
 } from "@utils";
 
-const libPath = "./lib/libraylib.so";
+const os = Deno.build.os;
+const libPath =  os === "windows" ? "./lib/raylib.dll" : "./lib/libraylib.so";
 
 const dylib = Deno.dlopen(libPath, {
   InitWindow: { parameters: ["i32", "i32", "buffer"], result: "void" },
