@@ -1,4 +1,27 @@
-// raylib/main.ts
+
+/**
+ * 
+ * Copyright 2026 eujandergois
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
+ * and associated documentation files (the “Software”), to deal in the Software without 
+ * restriction, including without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the 
+ * Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or 
+ * substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR 
+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ */
+
 import {
   color,
   cstr
@@ -130,51 +153,105 @@ function isWindowResized(): boolean {
 
 // unordened
 
+/**
+ * Setup init configuration flags
+ * @param flags uint flags
+ */
 function setConfigFlags(flags: number): void {
   dylib.symbols.SetConfigFlags(flags);
 }
 
+/**
+ * Set window configuration state using flags
+ * @param flags uint flags
+ */
 function setWindowState(flags: number): void {
   dylib.symbols.SetWindowState(flags);
 }
 
+/**
+ * Clear window configuration state flags
+ * @param flags uint flags
+ */
 function clearWindowState(flags: number): void {
   dylib.symbols.ClearWindowState(flags);
 }
 
-// Funções de input usando enums
+
+/**
+ * Check if a key has been pressed once
+ * @param key key to check
+ * @returns boolean
+ */
 function isKeyPressed(key: number): boolean {
   return dylib.symbols.IsKeyPressed(key);
 }
 
+/**
+ * Check if a key has been pressed again
+ * @param key key to check
+ * @returns boolean
+ */
 function isKeyDown(key: number): boolean {
   return dylib.symbols.IsKeyDown(key);
 }
 
+/**
+ * Check if a mouse button has been pressed once
+ * @param button button to check
+ * @returns boolean
+ */
 function isMouseButtonPressed(button: number): boolean {
   return dylib.symbols.IsMouseButtonPressed(button);
 }
 
+/**
+ * Check if a mouse button is being pressed
+ * @param button button to check
+ * @returns boolean
+ */
 function isMouseButtonDown(button: number): boolean {
   return dylib.symbols.IsMouseButtonDown(button);
 }
 
+/**
+ * Set target FPS (maximum)
+ * @param fps fps max value
+ */
 function setTargetFPS(fps: number): void {
   dylib.symbols.SetTargetFPS(fps);
 }
 
+/**
+ * Setup canvas (framebuffer) to start drawing
+ */
 function beginDrawing(): void {
   dylib.symbols.BeginDrawing();
 }
 
+/**
+ * End canvas drawing and swap buffers (double buffering)
+ */
 function endDrawing(): void {
   dylib.symbols.EndDrawing();
 }
 
+/**
+ * Set background color (framebuffer clear color)
+ * @param colorHex clear color
+ */
 function clearBackground(colorHex: number): void {
   dylib.symbols.ClearBackground(colorHex);
 }
 
+/**
+ * Draw text (using default font)
+ * @param text text to draw
+ * @param x text x position
+ * @param y text y position
+ * @param fontSize text font size
+ * @param colorHex text color
+ */
 function drawText(
   text: string,
   x: number,
@@ -191,6 +268,11 @@ function drawText(
   );
 }
 
+/**
+ * Draw current FPS
+ * @param x fps x text position
+ * @param y fps y text position
+ */
 function drawFPS(x: number, y: number): void {
   dylib.symbols.DrawFPS(x, y);
 }
