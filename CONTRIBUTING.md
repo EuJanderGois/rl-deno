@@ -34,7 +34,8 @@ We follow the **Conventional Commits** specification.
 Every commit must start with the **type** and a **short description** (imperative mood) on the first line. If necessary, skip a line and add a detailed body explaining *why* and *what* changed.
 
 **Template:**
-```plaintext
+
+``` plaintext
 type: short description
 
 [Optional: Detailed description of the changes.
@@ -42,6 +43,7 @@ Explain the context or reasoning behind the code.]
 ```
 
 **Example:**
+
 ```plaintext
 build: update deno tasks
 
@@ -57,6 +59,7 @@ Automate CLI tasks.
 ## Project Needs & Issues
 
 If you identify areas for improvement or have suggestions, please check the **Issues** tab.
+
 * If an issue exists, join the discussion.
 * If not, feel free to open a new issue. Think of it as a "Community To-Do List".
 
