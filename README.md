@@ -68,6 +68,9 @@ deno run --allow-ffi main.js
 
 ```
 
+> [!CAUTION]
+> JSR does not allow the uploading of `*.dll`, `*.so`, and related files. Download the `lib/` directory from the repository to access them, , or point it to dylib.
+
 ## ⚙️ Settings
 
 After your code imports, you can configure the library's behavior. This is useful if you want to use MSVC or MinGW-64 on Windows or tell the library that your Raylib dynamic library is in a different directory, for example.

@@ -14,10 +14,7 @@
     "@rl-deno": "./mod.ts"
   },
   "exports": "./mod.ts",
-  "publish": {
-    "include": [
-      "./src/**/*.ts",
-      "./lib"
-    ]
-  }
+  "exclude": [
+    "./lib"
+  ]
 }
