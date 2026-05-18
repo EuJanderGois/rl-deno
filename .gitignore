@@ -3,5 +3,4 @@ node_modules/
 cov_profile/
 coverage/
 .DS_Store
-lib/
 .vscode/

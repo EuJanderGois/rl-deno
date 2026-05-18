@@ -1,0 +1,23 @@
+{
+  "name": "@eujandergois/rl-deno",
+  "version": "0.0.15",
+  "tasks": {
+    "test:impl": "deno run --allow-ffi --unstable-ffi tests/implementation.ts"
+  },
+  "imports": {
+    "@ffi": "./src/ffi.ts",
+    "@std/path": "jsr:@std/path@^1.1.4",
+    "@types": "./src/types.ts",
+    "@utils": "./src/utils.ts",
+    "@config": "./src/config.ts",
+    "@symbols": "./src/symbols.ts",
+    "@rl-deno": "./mod.ts"
+  },
+  "exports": "./mod.ts",
+  "publish": {
+    "include": [
+      "./src/**/*.ts",
+      "./lib"
+    ]
+  }
+}

@@ -68,6 +68,21 @@ deno run --allow-ffi main.js
 
 ```
 
+## ⚙️ Settings
+
+After your code imports, you can configure the library's behavior. This is useful if you want to use MSVC or MinGW-64 on Windows or tell the library that your Raylib dynamic library is in a different directory, for example.
+
+The library automatically includes x86-64 binaries for Windows, Linux, and macOS. On Windows, the default is MSVC, so make sure you have Microsoft Visual C++ Redistributable. If you have a different architecture or operating system, you can specify the path to the dynamic library downloaded from the official repository or one you compiled yourself.
+
+``` typescript
+setupConfig({
+  windows: {
+    compiler: "msvc",
+    customPath: "../raylib.dll"
+  }
+});
+```
+
 ## 🤝 Contributing
 
 We are building the best graphics ecosystem for Deno, and we need **you**.

@@ -27,40 +27,18 @@ import {
   cstr
 } from "@utils";
 
-const os = Deno.build.os;
-const libPath =  os === "windows" ? "./lib/raylib.dll" : "./lib/libraylib.so";
+import { getLibPath, setupConfig } from "@config";
+import { libSymbols } from "@symbols";
 
-const dylib = Deno.dlopen(libPath, {
-  InitWindow: { parameters: ["i32", "i32", "buffer"], result: "void" },
-  CloseWindow: { parameters: [], result: "void" },
-  WindowShouldClose: { parameters: [], result: "bool" },
-  IsWindowReady: { parameters: [], result: "bool"},
-  IsWindowFullscreen: { parameters: [], result: "bool"},
-  IsWindowHidden: { parameters: [], result: "bool"},
-  IsWindowMinimized: { parameters: [], result: "bool"},
-  IsWindowMaximized: { parameters: [], result: "bool"},
-  IsWindowFocused: { parameters: [], result: "bool"},
-  IsWindowResized: { parameters: [], result: "bool"},
+let dylib: Deno.DynamicLibrary<typeof libSymbols> | null = null;
 
-  // unordened
-
-  SetConfigFlags: { parameters: ["u32"], result: "void" },
-  SetWindowState: { parameters: ["u32"], result: "void" },
-  ClearWindowState: { parameters: ["u32"], result: "void" },
-
-  // input
-  IsKeyPressed: { parameters: ["i32"], result: "bool" },
-  IsKeyDown: { parameters: ["i32"], result: "bool" },
-  IsMouseButtonPressed: { parameters: ["i32"], result: "bool" },
-  IsMouseButtonDown: { parameters: ["i32"], result: "bool" },
-
-  SetTargetFPS: { parameters: ["i32"], result: "void" },
-  BeginDrawing: { parameters: [], result: "void" },
-  EndDrawing: { parameters: [], result: "void" },
-  ClearBackground: { parameters: ["u32"], result: "void" }, // Cor é u32 (RGBA) ou struct
-  DrawText: { parameters: ["buffer", "i32", "i32", "i32", "u32"], result: "void" },
-  DrawFPS: { parameters: ["i32", "i32"], result: "void" },
-} as const);
+function fromDyLib() {
+  if (!dylib) {
+    const path = getLibPath();
+    dylib = Deno.dlopen(path, libSymbols);
+  }
+  return dylib.symbols;
+}
 
 /**
  * Initialize window and OpenGL context
@@ -73,7 +51,7 @@ function initWindow(
   height: number,
   title: string
 ): void {
-  dylib.symbols.InitWindow(
+  fromDyLib().InitWindow(
     width,
     height,
     cstr(title) as unknown as BufferSource
@@ -84,7 +62,7 @@ function initWindow(
  * Close window and unload OpenGL context
  */
 function closeWindow(): void {
-  dylib.symbols.CloseWindow();
+  fromDyLib().CloseWindow();
 }
 
 /**
@@ -92,7 +70,7 @@ function closeWindow(): void {
  * @returns boolean
  */
 function windowShouldClose(): boolean {
-  return dylib.symbols.WindowShouldClose();
+  return fromDyLib().WindowShouldClose();
 }
 
 /**
@@ -100,7 +78,7 @@ function windowShouldClose(): boolean {
  * @returns boolean
  */
 function isWindowReady(): boolean {
-  return dylib.symbols.IsWindowReady();
+  return fromDyLib().IsWindowReady();
 }
 
 /**
@@ -108,7 +86,7 @@ function isWindowReady(): boolean {
  * @returns boolean
  */
 function isWindowFullscreen(): boolean {
-  return dylib.symbols.IsWindowFullscreen();
+  return fromDyLib().IsWindowFullscreen();
 }
 
 /**
@@ -116,7 +94,7 @@ function isWindowFullscreen(): boolean {
  * @returns boolean
  */
 function isWindowHidden(): boolean {
-  return dylib.symbols.IsWindowHidden();
+  return fromDyLib().IsWindowHidden();
 }
 
 /**
@@ -124,7 +102,7 @@ function isWindowHidden(): boolean {
  * @returns boolean
  */
 function isWindowMinimized(): boolean {
-  return dylib.symbols.IsWindowMinimized();
+  return fromDyLib().IsWindowMinimized();
 }
 
 /**
@@ -132,7 +110,7 @@ function isWindowMinimized(): boolean {
  * @returns boolean
  */
 function isWindowMaximized(): boolean {
-  return dylib.symbols.IsWindowMaximized();
+  return fromDyLib().IsWindowMaximized();
 }
 
 /**
@@ -140,7 +118,7 @@ function isWindowMaximized(): boolean {
  * @returns boolean
  */
 function isWindowFocused(): boolean {
-  return dylib.symbols.IsWindowFocused();
+  return fromDyLib().IsWindowFocused();
 }
 
 /**
@@ -148,7 +126,7 @@ function isWindowFocused(): boolean {
  * @returns boolean
  */
 function isWindowResized(): boolean {
-  return dylib.symbols.IsWindowResized();
+  return fromDyLib().IsWindowResized();
 }
 
 // unordened
@@ -158,7 +136,7 @@ function isWindowResized(): boolean {
  * @param flags uint flags
  */
 function setConfigFlags(flags: number): void {
-  dylib.symbols.SetConfigFlags(flags);
+  fromDyLib().SetConfigFlags(flags);
 }
 
 /**
@@ -166,7 +144,7 @@ function setConfigFlags(flags: number): void {
  * @param flags uint flags
  */
 function setWindowState(flags: number): void {
-  dylib.symbols.SetWindowState(flags);
+  fromDyLib().SetWindowState(flags);
 }
 
 /**
@@ -174,7 +152,7 @@ function setWindowState(flags: number): void {
  * @param flags uint flags
  */
 function clearWindowState(flags: number): void {
-  dylib.symbols.ClearWindowState(flags);
+  fromDyLib().ClearWindowState(flags);
 }
 
 
@@ -184,7 +162,7 @@ function clearWindowState(flags: number): void {
  * @returns boolean
  */
 function isKeyPressed(key: number): boolean {
-  return dylib.symbols.IsKeyPressed(key);
+  return fromDyLib().IsKeyPressed(key);
 }
 
 /**
@@ -193,7 +171,7 @@ function isKeyPressed(key: number): boolean {
  * @returns boolean
  */
 function isKeyDown(key: number): boolean {
-  return dylib.symbols.IsKeyDown(key);
+  return fromDyLib().IsKeyDown(key);
 }
 
 /**
@@ -202,7 +180,7 @@ function isKeyDown(key: number): boolean {
  * @returns boolean
  */
 function isMouseButtonPressed(button: number): boolean {
-  return dylib.symbols.IsMouseButtonPressed(button);
+  return fromDyLib().IsMouseButtonPressed(button);
 }
 
 /**
@@ -211,7 +189,7 @@ function isMouseButtonPressed(button: number): boolean {
  * @returns boolean
  */
 function isMouseButtonDown(button: number): boolean {
-  return dylib.symbols.IsMouseButtonDown(button);
+  return fromDyLib().IsMouseButtonDown(button);
 }
 
 /**
@@ -219,21 +197,21 @@ function isMouseButtonDown(button: number): boolean {
  * @param fps fps max value
  */
 function setTargetFPS(fps: number): void {
-  dylib.symbols.SetTargetFPS(fps);
+  fromDyLib().SetTargetFPS(fps);
 }
 
 /**
  * Setup canvas (framebuffer) to start drawing
  */
 function beginDrawing(): void {
-  dylib.symbols.BeginDrawing();
+  fromDyLib().BeginDrawing();
 }
 
 /**
  * End canvas drawing and swap buffers (double buffering)
  */
 function endDrawing(): void {
-  dylib.symbols.EndDrawing();
+  fromDyLib().EndDrawing();
 }
 
 /**
@@ -241,7 +219,7 @@ function endDrawing(): void {
  * @param colorHex clear color
  */
 function clearBackground(colorHex: number): void {
-  dylib.symbols.ClearBackground(colorHex);
+  fromDyLib().ClearBackground(colorHex);
 }
 
 /**
@@ -259,7 +237,7 @@ function drawText(
   fontSize: number,
   colorHex: number
 ): void {
-  dylib.symbols.DrawText(
+  fromDyLib().DrawText(
     cstr(text) as unknown as BufferSource, 
     x,
     y,
@@ -274,7 +252,7 @@ function drawText(
  * @param y fps y text position
  */
 function drawFPS(x: number, y: number): void {
-  dylib.symbols.DrawFPS(x, y);
+  fromDyLib().DrawFPS(x, y);
 }
 
 export {
@@ -303,16 +281,8 @@ export {
   clearBackground,
   drawFPS,
   drawText,
-}
 
-/**
- * Collection of helpers,
- * usefull to compatibility
- */
-export const helpers = {
+  // helpers
+  setupConfig,
   color,
 }
-
-export const LIGHTGRAY = 0xC8C8C8FF; 
-export const WHITE = 0xFFFFFFFF;
-export const BLACK = 0x000000FF;
