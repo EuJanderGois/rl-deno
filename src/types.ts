@@ -184,3 +184,15 @@ export enum Colors {
   MAGENTA = rgb(255,0,255),
   RAYWHITE = rgb(245, 245, 245)
 }
+
+export interface Vector2 {
+  x: number;
+  y: number;
+}
+export interface Image {
+  data: Deno.PointerValue;
+  width: number;
+  height: number;
+  mipmaps: number;
+  format: number;
+}

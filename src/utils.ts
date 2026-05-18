@@ -21,10 +21,50 @@
  * 
  */
 
-import { ConfigFlags } from "@types"
+import { ConfigFlags, type Image } from "@types"
 
-export function cstr(text: string): Uint8Array {
-  return new TextEncoder().encode(text + "\0");
+// deno-lint-ignore no-explicit-any
+export function toNativeString(text: string): any {
+  // deno-lint-ignore no-explicit-any
+  return new TextEncoder().encode(text + "\0") as any;
+}
+
+export function fromNativeString(ptr: Deno.PointerValue): string | null {
+  if (ptr === null) {
+    return null
+  }
+
+  const view = new Deno.UnsafePointerView(ptr);
+  return view.getCString();
+}
+
+// deno-lint-ignore no-explicit-any
+export function toNativeImage(image: Image): any {
+  const buffer = new Uint8Array(24); // Exatos 24 bytes!
+  const view = new DataView(buffer.buffer);
+  
+  const ptrValue = image.data === null ? 0n : BigInt(Deno.UnsafePointer.value(image.data));
+  
+  view.setBigUint64(0, ptrValue, true);
+  view.setInt32(8, image.width, true);
+  view.setInt32(12, image.height, true);
+  view.setInt32(16, image.mipmaps, true);
+  view.setInt32(20, image.format, true);
+  
+  // deno-lint-ignore no-explicit-any
+  return buffer as any;
+}
+
+export function fromNativeImage(buffer: Uint8Array): Image {
+  const view = new DataView(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+  
+  return {
+    data: Deno.UnsafePointer.create(view.getBigUint64(0, true)), 
+    width: view.getInt32(8, true),   // offset 8
+    height: view.getInt32(12, true), // offset 12
+    mipmaps: view.getInt32(16, true),// offset 16
+    format: view.getInt32(20, true), // offset 20
+  };
 }
 
 /**

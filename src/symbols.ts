@@ -21,8 +21,17 @@
  * 
  */
 
+const rlImage = ["pointer", "i32", "i32", "i32", "i32"] as const;
+const rlVector2 = ["f32", "f32"] as const;
+
 
 export const libSymbols = {
+
+
+  /**
+   * Window related functions
+   */
+
   InitWindow: { parameters: ["i32", "i32", "buffer"], result: "void" },
   CloseWindow: { parameters: [], result: "void" },
   WindowShouldClose: { parameters: [], result: "bool" },
@@ -34,11 +43,55 @@ export const libSymbols = {
   IsWindowFocused: { parameters: [], result: "bool"},
   IsWindowResized: { parameters: [], result: "bool"},
 
-  // unordened
-
-  SetConfigFlags: { parameters: ["u32"], result: "void" },
-  SetWindowState: { parameters: ["u32"], result: "void" },
+  IsWindowState: { parameters: ["u32"], result: "bool" },
+  SetWindowState: { parameters: ["u32"], result: "void"},
   ClearWindowState: { parameters: ["u32"], result: "void" },
+  ToggleFullscreen: { parameters: [], result: "void" },
+  ToggleBorderlessWindowed: { parameters: [], result: "void" },
+  MaximizeWindow: { parameters: [], result: "void" },
+  MinimizeWindow: { parameters: [], result: "void" },
+  RestoreWindow: { parameters: [], result: "void" },
+  SetWindowIcon: { parameters: [{ struct: rlImage }], result: "void"},
+  SetWindowIcons: { parameters: ["buffer", "i32"], result: "void" },
+  SetWindowTitle: { parameters: ["buffer"], result: "void" },
+  SetWindowPosition: { parameters: ["i32", "i32"], result: "void" },
+  SetWindowMonitor: { parameters: ["i32"], result: "void" },
+  SetWindowMinSize: { parameters: ["i32", "i32"], result: "void" },
+  SetWindowMaxSize: { parameters: ["i32", "i32"], result: "void" },
+  SetWindowSize: { parameters: ["i32", "i32"], result: "void" },
+  SetWindowOpacity: { parameters: ["f32"], result: "void" },
+  SetWindowFocused: { parameters: [], result: "void" },
+  // TODO: *GetWindowHandle
+  GetScreenWidth: { parameters: [], result: "i32" },
+  GetScreenHeight: { parameters: [], result: "i32" },
+  GetRenderWidth: { parameters: [], result: "i32" },
+  GetRenderHeight: { parameters: [], result: "i32" },
+  GetMonitorCount: { parameters: [], result: "i32" },
+  GetCurrentMonitor: { parameters: [], result: "i32" },
+  GetMonitorPosition: { parameters: ["i32"], result: { struct: rlVector2 } },
+  
+  // TODO 
+  GetMonitorWidth: { parameters: ["i32"], result: "i32" },
+  GetMonitorHeight: { parameters: ["i32"], result: "i32" },
+  GetMonitorPhysicalWidth: { parameters: ["i32"], result: "i32" },
+  GetMonitorPhysicalHeight: { parameters: ["i32"], result: "i32" },
+  GetMonitorRefreshRate: { parameters: ["i32"], result: "i32" },
+  GetWindowPosition: { parameters: [], result: { struct: rlVector2 } },
+  GetWindowScaleDPI: { parameters: [], result: { struct: rlVector2 } },
+  GetMonitorName: { parameters: ["i32"], result: "pointer" },
+  SetClipboardText: { parameters: ["buffer"], result: "void"},
+  GetClipboardText: { parameters: [], result: "pointer" },
+  GetClipboardImage: { parameters: [], result: { struct: rlImage } },
+  EnableEventWaiting: { parameters: [], result: "void" },
+  DisableEventWaiting: { parameters: [], result: "void" },
+
+
+  // unordened
+  SetConfigFlags: { parameters: ["u32"], result: "void" },
+  
+  LoadImage: { parameters: ["buffer"], result: { struct: rlImage } },
+  UnloadImage: { parameters: [{ struct: rlImage }], result: "void" },
+  ExportImage: { parameters: [{ struct: rlImage }, "buffer"], result: "bool" },
 
   // input
   IsKeyPressed: { parameters: ["i32"], result: "bool" },
