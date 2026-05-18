@@ -1,6 +1,6 @@
 {
   "name": "@eujandergois/rl-deno",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "tasks": {
     "test:impl": "deno run --allow-ffi --unstable-ffi tests/implementation.ts"
   },
