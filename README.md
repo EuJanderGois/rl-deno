@@ -4,10 +4,9 @@
 
 ![Deno](https://img.shields.io/badge/Deno-v2.0-white?logo=deno) ![Raylib](https://img.shields.io/badge/Raylib-6.0-blue) ![License](https://img.shields.io/badge/License-MIT-green)
 
-> 🚧 **STATUS: PRE-ALPHA / HEAVY CONSTRUCTION** 🚧
->
-> **Note:** This project is currently **unstable** and may not work as expected. We are actively mapping the FFI and polishing the API.
-> Please be patient and check back for the **Stable Release v0.1.0** in a few days.
+> [!NOTE]
+> This project is currently **unstable** and may not work as expected. We are actively mapping the FFI and polishing the API.
+> Please be patient and check back for the **Stable Release v0.1.0**.
 
 ---
 
