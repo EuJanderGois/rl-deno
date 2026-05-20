@@ -27,7 +27,7 @@ setupConfig({
   
 });
 
-const { color, WindowConfig, combineFlags } = utils;
+const { color, combineFlags } = utils;
 
 const flags = combineFlags(
   ConfigFlags.FLAG_VSYNC_HINT,

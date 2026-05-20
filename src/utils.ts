@@ -21,14 +21,25 @@
  * 
  */
 
+// deno-lint-ignore-file no-explicit-any
+// typescript don't work as need with buffers :(
+
 import { ConfigFlags, type Image } from "@types"
 
-// deno-lint-ignore no-explicit-any
+/**
+ * Convert TS string value to native string with null-terminator
+ * @param text text string to convert
+ * @returns 
+ */
 export function toNativeString(text: string): any {
-  // deno-lint-ignore no-explicit-any
   return new TextEncoder().encode(text + "\0") as any;
 }
 
+/**
+ * Convert native string value to TS string.
+ * @param ptr pointer to native string
+ * @returns 
+ */
 export function fromNativeString(ptr: Deno.PointerValue): string | null {
   if (ptr === null) {
     return null
@@ -38,9 +49,14 @@ export function fromNativeString(ptr: Deno.PointerValue): string | null {
   return view.getCString();
 }
 
-// deno-lint-ignore no-explicit-any
+/**
+ * Convert Image interface to native struct
+ * as spected by `Raylib`.
+ * @param image 
+ * @returns 
+ */
 export function toNativeImage(image: Image): any {
-  const buffer = new Uint8Array(24); // Exatos 24 bytes!
+  const buffer = new Uint8Array(24);
   const view = new DataView(buffer.buffer);
   
   const ptrValue = image.data === null ? 0n : BigInt(Deno.UnsafePointer.value(image.data));
@@ -51,10 +67,14 @@ export function toNativeImage(image: Image): any {
   view.setInt32(16, image.mipmaps, true);
   view.setInt32(20, image.format, true);
   
-  // deno-lint-ignore no-explicit-any
   return buffer as any;
 }
 
+/**
+ * Convert native Image struct to TS Image interface
+ * @param buffer struct buffer from Raylib
+ * @returns Image
+ */
 export function fromNativeImage(buffer: Uint8Array): Image {
   const view = new DataView(buffer.buffer, buffer.byteOffset, buffer.byteLength);
   

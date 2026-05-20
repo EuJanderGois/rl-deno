@@ -8,8 +8,6 @@
 > This project is currently **unstable** and may not work as expected. We are actively mapping the FFI and polishing the API.
 > Please be patient and check back for the **Stable Release v0.1.0**.
 
----
-
 ## ⚡ Why rl-deno?
 
 We know the pain. You want to build games or graphics with Deno, but the existing bindings are outdated, undocumented, or abandoned.

@@ -6,6 +6,7 @@
   },
   "imports": {
     "@ffi": "./src/ffi.ts",
+    "@std/assert": "jsr:@std/assert@^1.0.19",
     "@std/path": "jsr:@std/path@^1.1.4",
     "@types": "./src/types.ts",
     "@utils": "./src/utils.ts",
